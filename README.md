@@ -1,32 +1,36 @@
-# Conda environment with environment.yml
+# Python environment with a requirements.txt
 
-[![Binder](https://mybinder.org/v2/gh/kanad13/anomaly_detection_demo/master)
+[![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/binder-examples/requirements/HEAD)
 
-A Binder-compatible repo with an `environment.yml` file.
+A Binder-compatible repo with a `requirements.txt` file.
 
-Access this Binder by clicking the blue badge above or at the following URL:
+Access this Binder at the following URL
 
-https://mybinder.org/v2/gh/kanad13/anomaly_detection_demo/master?labpath=35-anomaly_detection_demo.ipynb
+http://mybinder.org/v2/gh/binder-examples/requirements/HEAD
 
 ## Notes
-
-The `environment.yml` file should list all Python libraries on which your notebooks
-depend, specified as though they were created using the following `conda` commands:
+The `requirements.txt` file should list all Python libraries that your notebooks
+depend on, and they will be installed using:
 
 ```
-conda activate example-environment
-conda env export --from-history -f environment.yml
+pip install -r requirements.txt
 ```
 
-Note that the only libraries available to you will be the ones specified in
-the `environment.yml`, so be sure to include everything that you need!
+The base Binder image contains no extra dependencies, so be as
+explicit as possible in defining the packages that you need. This includes
+specifying explicit versions wherever possible.
 
-Also note that if you skip the `--from-history`, conda may include OS-specific
-packages in `environment.yml`, which you would have to manually prune from
-`environment.yml`. For example, confirmed macOS-specific packages that should
-be removed are:
+If you do specify strict versions, it is important to do so for *all*
+your dependencies, not just direct dependencies.
+Strictly specifying only some dependencies is a recipe for environments
+breaking over time.
 
-- libcxxabi=4.0.1
-- appnope=0.1.0
-- libgfortran=3.0.1
-- libcxx=4.0.1
+[pip-compile](https://github.com/jazzband/pip-tools/) is a handy
+tool for combining loosely specified dependencies with a fully frozen environment.
+You write a requirements.in with just the dependencies you need
+and pip-compile will generate a requirements.txt with all the strict packages and versions that would come from installing that package right now.
+That way, you only need to specify what you actually know you need,
+but you also get a snapshot of your environment.
+
+In this example we include the library `seaborn` which will be installed in
+the environment, and our notebook uses it to plot a figure.
